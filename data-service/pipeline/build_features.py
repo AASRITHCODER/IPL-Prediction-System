@@ -284,7 +284,7 @@ def build_features():
     balls["last_over_runs"] /= 200
     balls["total_balls"] /= 10
 
-    balls["season"] = ((balls["season"] - 2007))/20
+    balls["season"] = ((balls["season"] - 2007)) / 20
 
     balls["current_run_rate"] /= 36
     balls["required_run_rate"] /= 36
