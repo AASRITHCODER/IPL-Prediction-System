@@ -1,3 +1,5 @@
+import json
+
 import numpy as np
 import pandas as pd
 from core.config import CLEAN_DELIVERIES_PATH, CLEAN_MATCHES_PATH, VERSION_DIR
@@ -78,12 +80,26 @@ def build_features():
     )
 
     print("Score + wickets...")
+    balls["total_runs"] = (
+        balls["batsman_runs"]
+        + balls["isWide"]
+        + balls["isNoBall"]
+        + balls["Byes"]
+        + balls["LegByes"]
+        + balls["Penalty"]
+    )
     balls["current_score"] = balls.groupby(["matchId", "inning"])["total_runs"].cumsum()
 
+    balls.loc[balls["Penalty"] == 5, "batsman_runs"] = 5
+    balls["batsman_runs"] = balls["batsman_runs"] + balls["Byes"] + balls["LegByes"]
+    balls.loc[balls["batsman_runs"] > 6, "batsman_runs"] = 6
+
+    balls = balls.reset_index(drop=True)
     balls["is_wicket"] = (balls["player_dismissed"] != "Not Out").astype(int)
     balls["wickets_fallen"] = balls.groupby(["matchId", "inning"])["is_wicket"].cumsum()
 
     print("Target creation...")
+    balls = balls.reset_index(drop=True)
     first_innings_score = (
         balls[balls["inning"] == 0].groupby("matchId")["current_score"].max()
     )
@@ -212,6 +228,16 @@ def build_features():
     balls.loc[balls["inning"] == 0, "required_run_rate"] = 0
     balls.loc[balls["runs_required"] <= 0, "required_run_rate"] = 0
 
+    print("Adding bowler type feature...")
+    with open("../New Data/data/updated_pacers.json", "r") as f:
+        pacers = json.load(f)
+    with open("../New Data/data/updated_spinners.json", "r") as f:
+        spinners = json.load(f)
+
+    balls["is_pacer"] = balls["bowler"].apply(
+        lambda x: 1 if x in pacers else (0 if x in spinners else np.nan)
+    )
+
     print("Final adjustments...")
     mask = (balls["isNoBall"] == 1) & (balls["player_dismissed"] != "Not Out")
     balls.loc[mask, "isWide"] = 1
@@ -258,12 +284,7 @@ def build_features():
     balls["last_over_runs"] /= 200
     balls["total_balls"] /= 10
 
-    max_val = 2025 - 2008 + 1
-    values = np.arange(1, max_val + 1)
-    mean = np.mean(values)
-    std = np.std(values)
-
-    balls["season"] = ((balls["season"] - 2007) - mean) / std
+    balls["season"] = ((balls["season"] - 2007))/20
 
     balls["current_run_rate"] /= 36
     balls["required_run_rate"] /= 36

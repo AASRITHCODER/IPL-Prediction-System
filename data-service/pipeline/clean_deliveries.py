@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pandas as pd
@@ -55,6 +56,14 @@ def clean_deliveries():
     valid_match_ids = set(matches["matchId"].unique())
 
     balls = balls[balls["matchId"].isin(valid_match_ids)]
+
+    with open("../New Data/data/updated_players.json", "r") as file:
+        players = json.load(file)
+
+    print("Mapping Players...")
+    balls["batsman"] = balls["batsman"].map(players)
+    balls["non_striker"] = balls["non_striker"].map(players)
+    balls["bowler"] = balls["bowler"].map(players)
 
     print("Sorting by date...")
     balls = balls.sort_values(["date", "matchId", "inning", "over", "ball"])

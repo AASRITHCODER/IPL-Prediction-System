@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pandas as pd
@@ -58,6 +59,12 @@ def clean_matches():
     print("Removing matches without winner...")
     matches = matches[matches["winner"].notna()]
 
+    with open("../New Data/data/venue.json", "r") as file:
+        venues = json.load(file)
+
+    print("Mapping Venues...")
+    matches["venue"] = matches["venue"].map(venues)
+
     print("Converting types...")
     matches["date"] = pd.to_datetime(matches["date"])
     matches["winner_runs"] = matches["winner_runs"].astype(int)
@@ -85,6 +92,7 @@ def clean_matches():
             "dl_method_removal",
             "non_result_match_removal",
             "column_pruning",
+            "venue_mapping",
             "date_type_conversion",
             "chronological_sorting",
         ],
