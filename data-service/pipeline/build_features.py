@@ -232,9 +232,7 @@ def build_features():
     with open("../New Data/data/updated_pacers.json", "r") as f:
         pacers = json.load(f)
 
-    balls["is_pacer"] = balls["bowler"].apply(
-        lambda x: 1 if x in pacers else 0
-    )
+    balls["is_pacer"] = balls["bowler"].apply(lambda x: 1 if x in pacers else 0)
 
     print("Final adjustments...")
     mask = (balls["isNoBall"] == 1) & (balls["player_dismissed"] != "Not Out")
