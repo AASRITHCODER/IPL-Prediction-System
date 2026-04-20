@@ -231,11 +231,9 @@ def build_features():
     print("Adding bowler type feature...")
     with open("../New Data/data/updated_pacers.json", "r") as f:
         pacers = json.load(f)
-    with open("../New Data/data/updated_spinners.json", "r") as f:
-        spinners = json.load(f)
 
     balls["is_pacer"] = balls["bowler"].apply(
-        lambda x: 1 if x in pacers else (0 if x in spinners else np.nan)
+        lambda x: 1 if x in pacers else 0
     )
 
     print("Final adjustments...")
@@ -272,6 +270,10 @@ def build_features():
         ],
         inplace=True,
     )
+
+    print("Creating ML targets...")
+    balls["batsman_runs_target"] = balls["batsman_runs"].astype(int)
+    balls["is_wicket_target"] = balls["is_wicket"].astype(int)
 
     print("Normalization...")
     balls["batsman_runs"] /= 6
