@@ -15,3 +15,5 @@ CLEAN_MATCHES_PATH = VERSION_DIR / "clean_matches.parquet"
 CLEAN_DELIVERIES_PATH = VERSION_DIR / "clean_deliveries.parquet"
 
 METADATA_PATH = BASE_DIR / f"../ml-service/data/metadata/{DATASET_VERSION}"
+
+NON_STRIKER_RATE = 542 / 13581  # non_striker_outs/total_wickets

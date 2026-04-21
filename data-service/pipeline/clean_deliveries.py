@@ -64,9 +64,13 @@ def clean_deliveries():
     balls["batsman"] = balls["batsman"].map(players)
     balls["non_striker"] = balls["non_striker"].map(players)
     balls["bowler"] = balls["bowler"].map(players)
+    balls["player_dismissed"] = balls["player_dismissed"].map(players)
 
-    print("Sorting by date...")
-    balls = balls.sort_values(["date", "matchId", "inning", "over", "ball"])
+    print("Generating total_balls and Sorting by date...")
+    balls["total_balls"] = balls.groupby(["matchId", "inning", "over"]).cumcount() + 1
+    balls = balls.sort_values(
+        ["date", "matchId", "inning", "over", "total_balls"]
+    ).reset_index(drop=True)
 
     print("Removing duplicate rows...")
     balls = balls.drop_duplicates()

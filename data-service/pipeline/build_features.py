@@ -16,29 +16,7 @@ def build_features():
 
     print("Initial shapes:", balls.shape, matches.shape)
 
-    print("Aggregating duplicate ball rows...")
-    balls = balls.groupby(["matchId", "inning", "over", "ball"], as_index=False).agg(
-        {
-            "batsman_runs": "sum",
-            "isWide": "sum",
-            "isNoBall": "sum",
-            "Byes": "sum",
-            "LegByes": "sum",
-            "Penalty": "sum",
-            "total_runs": "sum",
-            "batting_team": "first",
-            "bowling_team": "first",
-            "batsman": "first",
-            "non_striker": "first",
-            "bowler": "first",
-            "player_dismissed": lambda x: (
-                x[x != "Not Out"].iloc[0] if any(x != "Not Out") else "Not Out"
-            ),
-            "date": "first",
-        }
-    )
-
-    balls = balls.sort_values(["matchId", "inning", "over", "ball"]).reset_index(
+    balls = balls.sort_values(["matchId", "inning", "over", "total_balls"]).reset_index(
         drop=True
     )
 
@@ -271,6 +249,8 @@ def build_features():
 
     print("Creating ML targets...")
     balls["batsman_runs_target"] = balls["batsman_runs"].astype(int)
+    balls["isWide_target"] = balls["isWide"].astype(int)
+    balls["isNoBall_target"] = balls["isNoBall"].astype(int)
     balls["is_wicket_target"] = balls["is_wicket"].astype(int)
 
     print("Normalization...")
