@@ -34,28 +34,35 @@ def build_features():
     print("Recomputing legal balls...")
     balls["is_legal"] = ((balls["isWide"] == 0) & (balls["isNoBall"] == 0)).astype(int)
 
-    balls["ball"] = balls.groupby(["matchId", "inning", "over"])["is_legal"].cumsum()
-    balls["ball"] = balls["ball"].replace(0, np.nan)
-    balls["ball"] = (
-        balls.groupby(["matchId", "inning", "over"])["ball"].ffill().fillna(1)
+    running_legal_count = balls.groupby(["matchId", "inning", "over"])["is_legal"].cumsum()
+
+    balls["legal_ball"] = (
+        running_legal_count.groupby([balls["matchId"], balls["inning"], balls["over"]])
+        .shift(1)
+        .fillna(0) + 1
     )
 
-    balls = balls[balls["ball"] <= 6].reset_index(drop=True)
+    balls = balls[balls["legal_ball"] <= 6].reset_index(drop=True)
 
     print("Basic match features...")
-    balls = balls.rename(columns={"ball": "legal_ball"})
     balls["legal_ball_1"] = (balls["isWide"] == 0) & (balls["isNoBall"] == 0)
 
-    balls["balls_bowled"] = balls.groupby(["matchId", "inning"])[
-        "legal_ball_1"
-    ].cumsum()
-    balls["balls_remaining"] = 120 - balls["balls_bowled"]
+    TOTAL_BALLS = 120
+
+    balls["balls_bowled"] = (
+        balls.groupby(["matchId", "inning"])["legal_ball_1"]
+        .cumsum()
+        .groupby([balls["matchId"], balls["inning"]])
+        .shift(fill_value=0)
+    )
+
+    balls["balls_remaining"] = TOTAL_BALLS - balls["balls_bowled"]
 
     balls["over_number"] = balls["over"].astype(int) + 1
 
-    balls["phase"] = np.select(
-        [balls["over_number"] <= 6, balls["over_number"] <= 15], [0, 1], default=2
-    )
+    balls["phase_pp"] = (balls["over_number"] <= 6).astype(int)
+    balls["phase_middle"] = ((balls["over_number"] > 6) & (balls["over_number"] <= 15)).astype(int)
+    balls["phase_death"] = (balls["over_number"] > 15).astype(int)
 
     print("Score + wickets...")
     balls["total_runs"] = (
@@ -70,14 +77,12 @@ def build_features():
 
     balls.loc[balls["Penalty"] == 5, "batsman_runs"] = 5
     balls["batsman_runs"] = balls["batsman_runs"] + balls["Byes"] + balls["LegByes"]
-    balls.loc[balls["batsman_runs"] > 6, "batsman_runs"] = 6
-
+    
     balls = balls.reset_index(drop=True)
     balls["is_wicket"] = (balls["player_dismissed"] != "Not Out").astype(int)
     balls["wickets_fallen"] = balls.groupby(["matchId", "inning"])["is_wicket"].cumsum()
 
     print("Target creation...")
-    balls = balls.reset_index(drop=True)
     first_innings_score = (
         balls[balls["inning"] == 0].groupby("matchId")["current_score"].max()
     )
@@ -160,22 +165,48 @@ def build_features():
         drop=True
     )
 
+    print("NoBall adjustments...")
+    mask = (balls["isNoBall"] == 1) & (balls["player_dismissed"] != "Not Out")
+    balls.loc[mask, "isWide"] = 1
+    balls.loc[mask, "isNoBall"] = 0
+
+    print("Target Creations...")
+    balls["batsman_runs_target"] = balls["batsman_runs"].astype(int)
+    balls["isWide_target"] = balls["isWide"].astype(int)
+    balls["isNoBall_target"] = balls["isNoBall"].astype(int)
+    balls["is_wicket_target"] = balls["is_wicket"].astype(int)
+
     print("Boundary features...")
     balls["is_boundary"] = balls["batsman_runs"].isin([4, 6]).astype(int)
 
     def compute_balls_since_boundary(x):
         groups = x.cumsum()
         result = x.groupby(groups).cumcount()
-        result[groups == 0] = range((groups == 0).sum())
+        result[groups == 0] = range(1,(groups == 0).sum()+1)
         return result
 
     balls["balls_since_boundary"] = balls.groupby(["matchId", "inning"])[
         "is_boundary"
     ].transform(compute_balls_since_boundary)
 
+    balls["balls_since_boundary"] = (
+        balls.groupby(["matchId", "inning"])["balls_since_boundary"]
+        .shift(1)
+        .fillna(0)
+    )
+
+    balls['balls_since_boundary'] = balls['balls_since_boundary'].astype(int)
+
+    print("Previous Creation...")
+    for col in ["batsman_runs", "isWide", "isNoBall", "is_wicket","total_runs"]:
+        balls[f"prev_{col}"] = balls.groupby(["matchId", "inning"])[col].shift(1).fillna(0)
+
+    balls["score_before"] = balls.groupby(["matchId", "inning"])['current_score'].shift(1).fillna(0)
+    balls["wickets_before"] = balls.groupby(["matchId", "inning"])['wickets_fallen'].shift(1).fillna(0)
+
     print("Target progress...")
     balls["percentage_target_achieved"] = np.where(
-        balls["inning"] == 0, 0.0, balls["current_score"] / balls["target"]
+        balls["inning"] == 0, 0.0, balls["score_before"] / balls["target"]
     )
 
     balls["percentage_target_achieved"] = (
@@ -186,21 +217,26 @@ def build_features():
     balls = balls.merge(matches[["matchId", "venue"]], on="matchId", how="left")
 
     print("Run rate features...")
-    balls["balls_bowled"] = balls.groupby(["matchId", "inning"])[
-        "legal_ball_1"
-    ].cumsum()
+    balls["balls_bowled"] = (
+        balls.groupby(["matchId", "inning"])["legal_ball_1"]
+        .cumsum()
+        .groupby([balls["matchId"], balls["inning"]])
+        .shift(fill_value=0)
+    )
+
+    balls["balls_remaining"] = TOTAL_BALLS - balls["balls_bowled"]
+
     balls["overs_bowled"] = balls["balls_bowled"] / 6
 
     balls["current_run_rate"] = np.where(
-        balls["balls_bowled"] > 0, balls["current_score"] / balls["overs_bowled"], 0
+        balls["balls_bowled"] > 0, balls["score_before"] / balls["overs_bowled"], 0
     )
 
-    balls["runs_required"] = balls["target"] - balls["current_score"]
-    balls["overs_remaining"] = balls["balls_remaining"] / 6
-
-    balls["required_run_rate"] = balls["runs_required"] / balls["overs_remaining"]
-    balls["required_run_rate"] = (
-        balls["required_run_rate"].replace([np.inf, -np.inf], 0).fillna(0)
+    balls["runs_required"] = balls["target"] - balls["score_before"]
+    balls["required_run_rate"] = np.where(
+        (balls["balls_remaining"] > 0) & (balls["runs_required"] > 0),
+        balls["runs_required"] * 6 / balls["balls_remaining"],
+        0
     )
 
     balls.loc[balls["inning"] == 0, "required_run_rate"] = 0
@@ -211,11 +247,6 @@ def build_features():
         pacers = json.load(f)
 
     balls["is_pacer"] = balls["bowler"].apply(lambda x: 1 if x in pacers else 0)
-
-    print("Final adjustments...")
-    mask = (balls["isNoBall"] == 1) & (balls["player_dismissed"] != "Not Out")
-    balls.loc[mask, "isWide"] = 1
-    balls.loc[mask, "isNoBall"] = 0
 
     balls["over"] = balls["over"] / 20
 
@@ -228,40 +259,43 @@ def build_features():
     print("Dropping columns...")
     balls.drop(
         columns=[
-            "legal_ball",
-            "batting_team",
-            "bowling_team",
-            "Byes",
-            "LegByes",
-            "Penalty",
-            "balls_bowled",
-            "overs_bowled",
-            "runs_required",
-            "overs_remaining",
-            "over_number",
-            "is_legal",
-            "legal_ball_1",
-            "is_boundary",
-            "date",
-        ],
+            'Byes',
+            'LegByes',
+            'Penalty',
+            'ball',
+            'balls_bowled',
+            'batsman_runs',
+            'batting_team',
+            'bowling_team',
+            'current_score',
+            'date',
+            'isNoBall',
+            'isWide',
+            'is_boundary',
+            'is_legal',
+            'is_wicket',
+            'legal_ball',
+            'legal_ball_1',
+            'over_number',
+            'over_number',
+            'overs_bowled',
+            'player_dismissed',
+            'runs_required',
+            'total_runs',
+            'wickets_fallen'
+            ],
         inplace=True,
     )
 
-    print("Creating ML targets...")
-    balls["batsman_runs_target"] = balls["batsman_runs"].astype(int)
-    balls["isWide_target"] = balls["isWide"].astype(int)
-    balls["isNoBall_target"] = balls["isNoBall"].astype(int)
-    balls["is_wicket_target"] = balls["is_wicket"].astype(int)
-
     print("Normalization...")
-    balls["batsman_runs"] /= 6
-    balls["total_runs"] /= 6
+    balls["prev_batsman_runs"] /= 6
+    balls["prev_total_runs"] /= 6
     balls["balls_remaining"] /= 120
-    balls["wickets_fallen"] /= 10
+    balls["wickets_before"] /= 10
     balls["balls_since_boundary"] /= 120
-    balls["current_score"] /= 200
+    balls["score_before"] /= 200
     balls["target"] /= 200
-    balls["last_over_runs"] /= 200
+    balls["last_over_runs"] /= 36
     balls["total_balls"] /= 10
 
     balls["season"] = ((balls["season"] - 2007)) / 20

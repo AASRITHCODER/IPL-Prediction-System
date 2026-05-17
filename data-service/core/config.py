@@ -1,6 +1,6 @@
 from pathlib import Path
 
-DATASET_VERSION = "v4_beta"
+DATASET_VERSION = "v4_gamma"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 

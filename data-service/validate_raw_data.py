@@ -1,9 +1,9 @@
 import pandas as pd
 
 deliveries = pd.read_parquet(
-    "../ml-service/data/processed/v4_beta/clean_deliveries.parquet"
+    "../ml-service/data/processed/v4_gamma/clean_deliveries.parquet"
 )
-matches = pd.read_parquet("../ml-service/data/processed/v4_beta/clean_matches.parquet")
+matches = pd.read_parquet("../ml-service/data/processed/v4_gamma/clean_matches.parquet")
 
 print("Deliveries shape:", deliveries.shape)
 print("Matches shape:", matches.shape)
