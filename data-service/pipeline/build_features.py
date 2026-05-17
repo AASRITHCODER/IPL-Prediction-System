@@ -34,12 +34,15 @@ def build_features():
     print("Recomputing legal balls...")
     balls["is_legal"] = ((balls["isWide"] == 0) & (balls["isNoBall"] == 0)).astype(int)
 
-    running_legal_count = balls.groupby(["matchId", "inning", "over"])["is_legal"].cumsum()
+    running_legal_count = balls.groupby(["matchId", "inning", "over"])[
+        "is_legal"
+    ].cumsum()
 
     balls["legal_ball"] = (
         running_legal_count.groupby([balls["matchId"], balls["inning"], balls["over"]])
         .shift(1)
-        .fillna(0) + 1
+        .fillna(0)
+        + 1
     )
 
     balls = balls[balls["legal_ball"] <= 6].reset_index(drop=True)
@@ -61,7 +64,9 @@ def build_features():
     balls["over_number"] = balls["over"].astype(int) + 1
 
     balls["phase_pp"] = (balls["over_number"] <= 6).astype(int)
-    balls["phase_middle"] = ((balls["over_number"] > 6) & (balls["over_number"] <= 15)).astype(int)
+    balls["phase_middle"] = (
+        (balls["over_number"] > 6) & (balls["over_number"] <= 15)
+    ).astype(int)
     balls["phase_death"] = (balls["over_number"] > 15).astype(int)
 
     print("Score + wickets...")
@@ -77,7 +82,7 @@ def build_features():
 
     balls.loc[balls["Penalty"] == 5, "batsman_runs"] = 5
     balls["batsman_runs"] = balls["batsman_runs"] + balls["Byes"] + balls["LegByes"]
-    
+
     balls = balls.reset_index(drop=True)
     balls["is_wicket"] = (balls["player_dismissed"] != "Not Out").astype(int)
     balls["wickets_fallen"] = balls.groupby(["matchId", "inning"])["is_wicket"].cumsum()
@@ -182,7 +187,7 @@ def build_features():
     def compute_balls_since_boundary(x):
         groups = x.cumsum()
         result = x.groupby(groups).cumcount()
-        result[groups == 0] = range(1,(groups == 0).sum()+1)
+        result[groups == 0] = range(1, (groups == 0).sum() + 1)
         return result
 
     balls["balls_since_boundary"] = balls.groupby(["matchId", "inning"])[
@@ -190,19 +195,23 @@ def build_features():
     ].transform(compute_balls_since_boundary)
 
     balls["balls_since_boundary"] = (
-        balls.groupby(["matchId", "inning"])["balls_since_boundary"]
-        .shift(1)
-        .fillna(0)
+        balls.groupby(["matchId", "inning"])["balls_since_boundary"].shift(1).fillna(0)
     )
 
-    balls['balls_since_boundary'] = balls['balls_since_boundary'].astype(int)
+    balls["balls_since_boundary"] = balls["balls_since_boundary"].astype(int)
 
     print("Previous Creation...")
-    for col in ["batsman_runs", "isWide", "isNoBall", "is_wicket","total_runs"]:
-        balls[f"prev_{col}"] = balls.groupby(["matchId", "inning"])[col].shift(1).fillna(0)
+    for col in ["batsman_runs", "isWide", "isNoBall", "is_wicket", "total_runs"]:
+        balls[f"prev_{col}"] = (
+            balls.groupby(["matchId", "inning"])[col].shift(1).fillna(0)
+        )
 
-    balls["score_before"] = balls.groupby(["matchId", "inning"])['current_score'].shift(1).fillna(0)
-    balls["wickets_before"] = balls.groupby(["matchId", "inning"])['wickets_fallen'].shift(1).fillna(0)
+    balls["score_before"] = (
+        balls.groupby(["matchId", "inning"])["current_score"].shift(1).fillna(0)
+    )
+    balls["wickets_before"] = (
+        balls.groupby(["matchId", "inning"])["wickets_fallen"].shift(1).fillna(0)
+    )
 
     print("Target progress...")
     balls["percentage_target_achieved"] = np.where(
@@ -236,7 +245,7 @@ def build_features():
     balls["required_run_rate"] = np.where(
         (balls["balls_remaining"] > 0) & (balls["runs_required"] > 0),
         balls["runs_required"] * 6 / balls["balls_remaining"],
-        0
+        0,
     )
 
     balls.loc[balls["inning"] == 0, "required_run_rate"] = 0
@@ -259,31 +268,31 @@ def build_features():
     print("Dropping columns...")
     balls.drop(
         columns=[
-            'Byes',
-            'LegByes',
-            'Penalty',
-            'ball',
-            'balls_bowled',
-            'batsman_runs',
-            'batting_team',
-            'bowling_team',
-            'current_score',
-            'date',
-            'isNoBall',
-            'isWide',
-            'is_boundary',
-            'is_legal',
-            'is_wicket',
-            'legal_ball',
-            'legal_ball_1',
-            'over_number',
-            'over_number',
-            'overs_bowled',
-            'player_dismissed',
-            'runs_required',
-            'total_runs',
-            'wickets_fallen'
-            ],
+            "Byes",
+            "LegByes",
+            "Penalty",
+            "ball",
+            "balls_bowled",
+            "batsman_runs",
+            "batting_team",
+            "bowling_team",
+            "current_score",
+            "date",
+            "isNoBall",
+            "isWide",
+            "is_boundary",
+            "is_legal",
+            "is_wicket",
+            "legal_ball",
+            "legal_ball_1",
+            "over_number",
+            "over_number",
+            "overs_bowled",
+            "player_dismissed",
+            "runs_required",
+            "total_runs",
+            "wickets_fallen",
+        ],
         inplace=True,
     )
 
