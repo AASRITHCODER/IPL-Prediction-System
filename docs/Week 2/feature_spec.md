@@ -5,7 +5,7 @@
 ## Executive Summary
 
 ML-powered cricket intelligence platform for IPL T20 matches with:
-- **Pre-computed embeddings** (player & venue, seasonal, chronologically safe)
+- **Tab Transformer learned embeddings** (player & venue, seasonal, chronologically safe)
 - **Wicket prediction** (binary classifier)
 - **Run prediction** (Unified zero-padded LSTM for all balls)
 - **RL agent** (bowling strategy optimization)
@@ -19,64 +19,62 @@ ML-powered cricket intelligence platform for IPL T20 matches with:
 | Feature | Type | Raw Range | Normalization | Notes |
 |---------|------|-----------|---------------|-------|
 | `inning` | int | 0 - 1 | None | Categorical identifier |
-| `over` | int | 1 - 20 | `over / 20` | Normalized to [0.05, 1.0] |
-| `sin_ball` | float | -1 to 1 | `sin(2π × ball / 6)` | Cyclic encoding of ball position |
-| `cos_ball` | float | -1 to 1 | `cos(2π × ball / 6)` | Cyclic encoding of ball position |
-| `balls_remaining` | int | 0 - 120 | `balls_remaining / 120` | Normalized to [0, 1]|
-| `current_score` | int | 0 - 300 | **TBD**: min-max / ÷100 / ÷200 | Test during training |
-| `wickets_fallen` | int | 0 - 10 | `wickets_fallen / 10` | Normalized to [0, 1] |
-| `target` | int | 0 - 300 | Same as `current_score` | 0 for inning 1 |
-| `phase` | categorical | 3 classes | One-hot encoding | powerplay/middle/death |
+| `over` | int | 0 - 19 | `over / 20` | Normalized to [0, 0.95] |
+| `total_balls` | int | 1 - 17 | `total_balls / 10` | Normalized to [0.1, 1.0+] |
+| `sin_ball` | float | -1 to 1 | `sin(2π × legal_ball / 6)` | Cyclic encoding of ball position |
+| `cos_ball` | float | -1 to 1 | `cos(2π × legal_ball / 6)` | Cyclic encoding of ball position |
+| `balls_remaining` | int | 0 - 120 | `balls_remaining / 120` | Balls remaining before ball bowled, Normalized to [0, 1]|
+| `score_before` | int | 0 - 300 | ` score_before / 200` | Test during training |
+| `wickets_before` | int | 0 - 10 | `wickets_before / 10` | Normalized to [0, 0.9] |
+| `current_run_rate` | float | 0 - 66 | `current_run_rate / 36` | Normalized to [0, 1.833] |
+| `required_run_rate` | float | 0 - 700 | `required_run_rate / 36`, clip at 2 | Normalized to [0, 2] |
+| `target` | int | 0 - 288 | `target / 200` | 0 for inning 1 |
+| `phase_pp` | int | 0 - 1 | None | powerplay |
+| `phase_middle` | int | 0 - 1 | None | middle |
+| `phase_death` | int | 0 -1 | None | death |
 
 **Notes**
 - **Formulae**: balls_remaining = (20 - current_over) * 6 - current_ball
 - **For Phase**: 0: powerplay (1 - 6 overs) / 1: middle (7-15 overs)/ 2: death (16 - 20 overs)
-- **inning Switch**: Acts as a binary switch to zero out chase weights.
-- **Ball Encoding Rationale**: Using `sin_ball` and `cos_ball` instead of raw `ball` captures the cyclic nature (ball 6 → ball 1 transition) and ensures smooth gradients.
+- **legal_ball**: a dynamically reconstructed index (1-6) that ignores extras
+- **inning Switch**: Acts as a binary switch to zero out chase weights
+- **Ball Encoding Rationale**: Using `sin_ball` and `cos_ball` instead of raw `ball` captures the cyclic nature (ball 6 → ball 1 transition) and ensures smooth gradients
 
 ### 1.2 Extended Context Features
 
 | Feature | Type | Raw Range | Normalization | Notes |
 |---------|------|-----------|---------------|-------|
-| `last_over_runs` | int | 0 - 37 | Same as `current_score` | Recent momentum |
+| `last_over_runs` | int | 0 - 37 | `last_over_runs / 36` | Recent momentum |
 | `balls_since_boundary` | int | 0 - 120 | `balls_since_boundary / 120` | Pressure indicator |
-| `percentage_target_achieved` | float | 0 - 1 | None | 0.0 for inning 1; `current_score / target` for inning 2 |
+| `percentage_target_achieved` | float | 0 - 1 | None | 0.0 for inning 1; `score_before / target` for inning 2 |
+| `prev_batsman_runs` | float | 0 - 6     | `prev_batsman_runs / 6` | Runs scored by batsman on previous ball        |
+| `prev_total_runs`   | float | 0 - 7+    | `prev_total_runs / 6`   | Total runs from previous ball including extras |
+| `prev_isWide`       | int   | 0 - 1     | None                    | Indicates previous delivery was a wide         |
+| `prev_isNoBall`     | int   | 0 - 1     | None                    | Indicates previous delivery was a no-ball      |
+| `prev_is_wicket`    | int   | 0 - 1     | None                    | Indicates wicket fell on previous ball         |
+
 
 ### 1.3 Player Features
 
 | Feature | Type | Raw Range | Normalization | Notes |
 |---------|------|-----------|---------------|-------|
-| `macro_batter_embedding` | vector | [-1, 1] | None | Pre-normalized |
-| `micro_batter_embedding` | vector | [-1, 1] | None | Pre-normalized |
-| `micro_non_striker_embedding` | vector | [-1, 1] | None | Pre-normalized |
-| `macro_bowler_embedding` | vector | [-1, 1] | None | Pre-normalized |
-| `micro_bowler_embedding` | vector | [-1, 1] | None | Pre-normalized |
+| `batsman_embedding` | vector | [-1, 1] | None | Pre-normalized |
+| `non_striker_embedding` | vector | [-1, 1] | None | Pre-normalized |
+| `bowler_embedding` | vector | [-1, 1] | None | Pre-normalized |
+| `is_pacer` | int | 0 - 1 | None | 0 for Spinner |
 
 ### 1.4 Venue & Metadata
 
 | Feature | Type | Raw Range | Normalization | Notes |
 |---------|------|-----------|---------------|-------|
-| `macro_venue_embedding` | vector | [-1, 1] | None | Pre-normalized |
-| `season_year` | int | 2008 - 2030 | `(year - μ) / σ` | Standardization (mean & std) |
+| `venue_embedding` | vector | [-1, 1] | None | Pre-normalized |
+| `season` | int | 2008 - 2030 | `(season - 2007) / 20` | Normalized to [0.05, 0.9] |
 
-## 2. Normalization Strategy for Run-Related Features
+## 2. Player & Venue Embeddings
 
-**Features requiring run normalization**: `current_score`, `target`, `last_over_runs`
+**Tab Transformer learned offline** and placed in dataset as fixed vectors (NOT trainable during model training).
 
-**Approach**: To be finalized during model training phase. Test these options:
-
-1. **Min-Max Scaling**: `(score - min) / (max - min)` where max ≈ 300
-2. **Division by 100**: `score / 100` (simple, interpretable)
-3. **Division by 200**: `score / 200` (ensures most values < 1)
-4. **Standardization**: `(score - μ) / σ` using training set statistics
-
-**Recommendation**: Start with **÷200** for simplicity, then experiment with min-max if model struggles.
-
-## 3. Player & Venue Embeddings
-
-**Pre-computed offline** and placed in dataset as fixed vectors (NOT trainable during model training).
-
-### 3.1 Embedding Strategy
+### 2.1 Embedding Strategy
 
 **Initial embedding dimensions**:
 
@@ -88,7 +86,7 @@ These values are starting points and may be tuned based on validation performanc
 
 **Generation**:
 - Computed externally using historical delivery data
-- Micro embeddings by TabTransformer and Macro by PCA / Standardization of Stats
+- Embeddings by TabTransformer
 - Season N embeddings: Use data from seasons 2008 to N-1 only
 - Dimension: 20-70 (players), 10-15 (venues)
 
@@ -98,48 +96,49 @@ These values are starting points and may be tuned based on validation performanc
 
 **Chronological Safety**: Embeddings for 2024 use 2008-2023 data; 2025 uses 2008-2024 data.
 
-## 4. Extras Handling
+## 3. Extras Handling
 
-**Extras NOT predicted by ML models** — handled probabilistically in simulator.
+**Extras Prediction Models**: Extras are not handled probabilistically. Instead, they are predicted directly via machine learning models utilizing the binary target variables (`isWide_target`, `isNoBall_target`) generated during the feature engineering pipeline.
 
-### Bowler Extras Stats
+### 3.1 Extras Modeling Strategy
 
-| Stat | Description |
-|------|-------------|
-| `powerplay_wide_rate` | P(wide per legal delivery in powerplay) |
-| `powerplay_no_ball_rate` | P(no-ball per legal delivery in powerplay) |
-| `middle_wide_rate` | P(wide per legal delivery in middle) |
-| `middle_no_ball_rate` | P(no-ball per legal delivery in middle) |
-| `death_wide_rate` | P(wide per legal delivery in death) |
-| `death_no_ball_rate` | P(no-ball per legal delivery in death) |
+- **Wide Model**: Binary classifier predicting P(wide) ∈ [0, 1] for the current delivery.
+- **No-Ball Model**: Binary classifier predicting P(no-ball) ∈ [0, 1] for the current delivery.
+- **Input Space**: These models utilize the exact same normalized feature space (Match Context, Player/Venue Embeddings, Sequence Momentum) as the Wicket model.
 
->Note: if overs by bowler < 5 for particular phase → league average
+### 3.2 Simulator Logic
 
-### Simulator Logic
+The match outcome emerges from the interaction of these models inside the simulator. Wides and No-balls disrupt the standard legal delivery flow and inject sequence momentum (`prev_*` features).
 
-The system uses multiple specialized models (wicket, runs, sequence, RL). There is no single unified model.<br>
-Match outcome emerges from the interaction of these models inside the simulator.
+1. **Predict Extras**: Query the Wide and No-Ball models before the Wicket/Run models.
+   - If **Wide** occurs: Add 1 run, set `prev_isWide` = 1, repeat the legal ball index.
+   - If **No-Ball** occurs: Add 1 run, set `prev_isNoBall` = 1, repeat the legal ball index, and trigger the Free Hit state for the next delivery.
+2. **Get Core Predictions**: If the delivery is legal (or a legal Free Hit), execute the Wicket model → execute the LSTM Run model.
+3. **Update State**: Append results to sequence history, update scoreboards, and process strike rotation.
 
-1. **Sample extras**: If `random() < wide_rate` → add run, repeat ball; if `random() < no_ball_rate` → add run, repeat ball, next is free hit
-2. **Get ML prediction**: Wicket model → LSTM Run model
-3. **Update state**: Scores, strike rotation
+**Edge Cases & Constraints**: 
+- Free hit state explicitly disables the Wicket model for that specific delivery. 
+- Consecutive or multiple wides are possible on the same ball index. 
+- A delivery cannot simultaneously be a legal wide and a no-ball (simulator logic dictates No-ball takes precedence in sequence logging).
 
-**Edge Cases**: Free hit disables wicket model | Multiple wides possible | No-ball + wide = 2 runs
+## 4. Model Architecture
 
-## 5. Model Architecture
-
-### 5.1 Wicket Model
+### 4.1 Wicket Model
 - **Type**: Binary classifier (wicket / no wicket)
 - **Input**: All normalized features from Sections 1.1-1.4
 - **Output**: P(wicket) ∈ [0, 1]
 - **Architecture**: During Building Phase
 
-### 5.2 Unified LSTM Run Model (All Balls)
+### 4.2 Unified LSTM Run Model (All Balls)
 - **Type**: Sequence-based multi-class classifier
 - **Input**: Last 30 balls (30 × feature_dim)
 - **Output**: P(runs) for {0, 1, 2, 3, 4, 5, 6}
+- **Main Target Variable**: `batsman_runs_target`
 - **Architecture**: During Building Phase
 - **Padding**: Left-zero-padding used for dummy historical deliveries when predicting balls 1 through 29
+
+**Sequence Injection Strategy**:
+The `prev_*` tracking features (runs, extras, wickets from the immediate preceding ball) are concatenated with the static tabular embeddings at every time step of the LSTM sequence. This allows the model to capture immediate momentum alongside match context.
 
 **Model Transition**:
 ```
@@ -151,17 +150,21 @@ Sequence predicting Ball 31: [Ball_2, Ball_3, Ball_4, ..., Ball_31_Features]
 ```
 LSTM sequence resets at start of each inning
 
-## 6. Match Simulation Flow
+## 5. Match Simulation Flow
 
 ### Target Variables Definition
 
 Each ML component has a clearly defined target variable:
 
-1. Wicket Model → target: wicket (0/1)
-2. LSTM Run Model → target: runs per ball (0,1,2,3,4,5,6)
-3. RL Bowler Selection Model → target: reward signal based on match outcome
+Each ML component has a clearly defined target variable matching the feature pipeline:
 
-### 6.1 Strike Rotation Logic
+1. Wicket Model → target: `is_wicket_target`
+2. Run Model → target: `batsman_runs_target`
+3. Wide Model → target: `isWide_target`
+4. No Ball Model → target: `isNoBall_target`
+5. RL Bowler Selection Model → target: reward signal based on match outcome
+
+### 5.1 Strike Rotation Logic
 
 | Event | Action |
 |-------|--------|
@@ -170,7 +173,7 @@ Each ML component has a clearly defined target variable:
 | Wicket | New batter takes striker's end |
 | Even runs (0, 2, 4, 6) | No swap |
 
-### 6.2 Bowling Constraints
+### 5.2 Bowling Constraints
 
 | Constraint | Rule |
 |------------|------|
@@ -179,23 +182,23 @@ Each ML component has a clearly defined target variable:
 | Validity | Must be in playing XI |
 | Minimum | < 5 bowlers allowed (flexibility) |
 
-### 6.3 Match Structure
+### 5.3 Match Structure
 
 - **Format**: 2 inning, 20 overs each, 120 legal balls per inning
 - **Termination**: 20 overs complete OR 10 wickets fall OR target reached (inning 2)
 - **Target**: `inning_1_score + 1` for inning 2; `0` for inning 1
 - **RL Control**: Selects bowler at start of each over for both teams
 
-## 7. Reinforcement Learning Environment
+## 6. Reinforcement Learning Environment
 
-### 7.1 RL Agent Role
+### 6.1 RL Agent Role
 
 **Objective**: Select optimal bowler at the start of each over to maximize win probability.
 
 - **Decision frequency**: Once per over (~20 per inning)
 - **Scope**: Controls bowling for both teams
 
-### 7.2 RL State Space
+### 6.2 RL State Space
 
 **To be finalized during RL training phase.** Initial proposal includes:
 
@@ -206,15 +209,15 @@ Each ML component has a clearly defined target variable:
 - `overs_bowled_per_bowler`: Dict of overs bowled
 - `overs_left_per_bowler`: Dict of overs remaining
 
-### 7.3 RL Action & Reward
+### 6.3 RL Action & Reward
 
 - **Action**: Select `bowler_id` from `available_bowlers`
 - **Validation**: Simulator enforces constraints; invalid action → negative penalty
 - **Reward**: To be decided during training
 
-## 8. Team Composition
+## 7. Team Composition
 
-### 8.1 Playing XI & Batting Order
+### 7.1 Playing XI & Batting Order
 
 | Mode | Playing XI | Batting Order |
 |------|------------|---------------|
@@ -223,19 +226,20 @@ Each ML component has a clearly defined target variable:
 
 **Validation**: All 11 players must have embeddings for the season.
 
-### 8.2 Bowling Order
+### 7.2 Bowling Order
 
 **Not predefined** — RL agent selects bowler each over subject to constraints in Section 6.2.
 
-## 9. Dataset Requirements
+## 8. Dataset Requirements
 
-### 9.1 Data Scope
+### 8.1 Data Scope
 
 - **League**: IPL only (2008-present)
-- **Granularity**: Ball-by-ball legal deliveries (wides/no-balls removed)
+- **Granularity**: Ball-by-ball deliveries
 - **Structure**: Data processed in overlapping sliding windows of exactly 30 balls.
+- **Extras Handling (Wides)**: To mirror the simulator's logic of repeating the ball index, wide deliveries are explicitly row-expanded (repeated) in the dataset before reconstructing the legal ball count.
 
-### 9.2 Chronological Split
+### 8.2 Chronological Split
 
 | Set | Description |
 |-----|-------------|
@@ -246,23 +250,22 @@ Each ML component has a clearly defined target variable:
 **Critical**: No future data leakage in embeddings or features.<br>
 **Note**: 2023 and 2024 are critical training years to ensure the model adapts to the modern ~185+ par score meta introduced by the Impact Player rule. Validation and Test are split mid-season 2025 to evaluate the model's performance on pitch degradation.
 
-### 9.3 Data Quality
+### 8.3 Data Quality
 
 **Required Fields**: Player IDs, venue ID, match outcome, ball outcome (runs/wicket), over/ball counts
 **Action if Missing**: Exclude ball/match from dataset
 
-## 10. Implementation Pipeline
+## 9. Implementation Pipeline
 
 ### Phase 1: Data Pipeline
 1. Extract ball-by-ball data from IPL sources
-2. Clean data, remove extras, validate fields
+2. Clean data, expand wide deliveries into multiple sequence rows (repeating the ball index), and reconstruct a strict 1-6 legal ball count
 3. Engineer features (`phase`, `last_over_runs`, etc.)
-4. Compute bowler phase wise extras stats (`powerplay_wide_rate`, `death_no_ball_rate`, etc.)
-5. Create chronological train/val/test splits
+4. Create chronological train/val/test splits
 
 ### Phase 2: Embedding Generation (External)
-1. Compute macro and micro player embeddings (batters, bowlers) from historical data
-2. Compute macro venue embeddings
+1. Compute player embeddings (batters, bowlers) from historical data
+2. Compute venue embeddings
 3. Generate league-average embeddings for cold-start
 4. Place embeddings in dataset as fixed vectors
 5. Ensure chronological constraint (season N uses data up to N-1)
@@ -291,7 +294,7 @@ Each ML component has a clearly defined target variable:
 3. Deploy embedding lookup service
 4. Integrate with frontend
 
-## 11. Model Outputs Summary
+## 10. Model Outputs Summary
 
 | Model | Output |
 |-------|--------|
@@ -301,15 +304,15 @@ Each ML component has a clearly defined target variable:
 
 **Excluded**: Wicket types (bowled/caught/LBW), fielding positions, shot types
 
-## 12. Key Design Decisions
+## 11. Key Design Decisions
 
 ### Finalized
 - **LSTM Sequence Strateg**y: Overlapping sliding windows of 30 balls to massively increase training data volume and capture multi-over momentum.
-- **Player Representation**: Concatenation of TabTransformer micro-interactions and normalized macro-season stats at the sequence input.
+- **Player Representation**: Concatenation of TabTransformer interactions and normalized season stats at the sequence input.
 - **inning Handling**: 0 for inning 1
 - **Main Model**: Multi-model cricket simulation system with specialized models interacting through a simulator
 - **Ball Encoding**: Cyclic (sin/cos) to capture position
-- **Embeddings**: Pre-computed externally, not trainable
+- **Embeddings**: TabTransformer learned externally, not trainable
 - **Bowling Flexibility**: < 5 bowlers allowed if needed
 - **Consecutive Overs**: Constraint applies within inning only
 
@@ -318,46 +321,65 @@ Each ML component has a clearly defined target variable:
 - **RL reward structure**: Win/loss only vs intermediate rewards
 - **RL training methodology**: Algorithm, exploration, opponent generation
 
-## 13. Quick Reference
+## 12. Quick Reference
 
 ### Normalization Cheat Sheet
 ```
-over               → over / 20
-ball               → sin(2π × ball/6), cos(2π × ball/6)
-balls_remaining    → balls_remaining / 120
-wickets_fallen     → wickets_fallen / 10
-balls_since_boundary → balls_since_boundary / 120
-season_year        → (year - μ) / σ
-runs (all)         → TBD (min-max / ÷100 / ÷200)
-embeddings         → None (already normalized)
-phase              → One-hot encoding
-inning            → None (0 or 1)
+over                        → over / 20
+total_balls                 → total_balls / 10
+legal_ball                  → sin(2π × legal_ball/6), cos(2π × legal_ball/6)
+balls_remaining             → balls_remaining / 120
+wickets_before              → wickets_before / 10
+balls_since_boundary        → balls_since_boundary / 120
+season                      → (season - 2007) / 20
+runs (score/target)         → score / 200, target / 200
+last_over_runs              → last_over_runs / 36
+current_run_rate            → current_run_rate / 36
+required_run_rate           → required_run_rate / 36 (clipped at 2)
+prev_batsman_runs           → prev_batsman_runs / 6
+prev_total_runs             → prev_total_runs / 6
+embeddings                  → None (already normalized)
+phase                       → One-hot encoding (phase_pp, phase_middle, phase_death)
+inning                      → None (0 or 1)
 percentage_target_achieved  → 0.0 (1st inning) or current/target (2nd inning)
 ```
 
 ### Model Flow
 ```
-For each ball:
-    1. Check phase wide
-      → add run
-      → repeat ball
+For each ball index:
+    1. Predict Wide (ML Model)
+        If Wide == 1:
+            → add 1 run
+            → set prev_isWide = 1
+            → repeat ball index
 
-  2. Check phase no-ball
-      → add run
-      → free hit = True
+    2. Predict No-Ball (ML Model)
+        If No-Ball == 1:
+            → add 1 run
+            → set prev_isNoBall = 1
+            → set free_hit_state = True
+            → repeat ball index
 
-  3. If free hit:
-          wicket = 0
-          Run LSTM model
-    Else:
-          predict wicket
-          if wicket:
-              scores = 0, new batter
-          else:
-              Run LSTM model
-  4. If over complete: RL selects next bowler
+    3. Get Core Predictions (If Legal or Legal Free Hit)
+        If free_hit_state == True:
+            → wicket = 0
+            → Run LSTM Runs model
+            → set free_hit_state = False (reset for next delivery)
+        Else:
+            → Predict Wicket (ML Model)
+            If Wicket == 1:
+                → runs = 0
+                → new batter takes strike
+            Else:
+                → Run LSTM Runs model
 
-  "Assumption: Wicket deliveries yield 0 runs in simulation."
+    4. State Update
+        → Update scoreboard, balls remaining, sequence history (`prev_*` features)
+        → Process strike rotation logic
+        If over complete:
+            → RL Agent selects next bowler
+
+    *Assumption: Wicket deliveries yield 0 runs in simulation.*
 ```
 
 ### Constraints Validation

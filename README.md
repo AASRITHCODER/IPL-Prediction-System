@@ -4,6 +4,7 @@ Project Based on Interview -->
 2. https://www.instagram.com/p/DUx1P8miqmr
 
 ~ 12.68x increase in data
+"Hybrid Sequential Multi-Task Cricket Prediction System"
 
 pre-commit run --all-files
 
