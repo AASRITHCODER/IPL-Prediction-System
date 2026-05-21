@@ -1,0 +1,197 @@
+[
+  {
+    "team": "SRH",
+    "highest": {
+      "score": "287/3",
+      "opposition": "RCB",
+      "date": "15 Apr 2024"
+    },
+    "lowest": {
+      "score": "96",
+      "opposition": "MI",
+      "date": "2019"
+    }
+  },
+  {
+    "team": "RCB",
+    "highest": {
+      "score": "263/5",
+      "opposition": "PWI",
+      "date": "23 Apr 2013"
+    },
+    "lowest": {
+      "score": "49",
+      "opposition": "KKR",
+      "date": "23 Apr 2017"
+    }
+  },
+  {
+    "team": "KKR",
+    "highest": {
+      "score": "272/7",
+      "opposition": "DC",
+      "date": "03 Apr 2024"
+    },
+    "lowest": {
+      "score": "67",
+      "opposition": "MI",
+      "date": "16 May 2008"
+    }
+  },
+  {
+    "team": "PBKS",
+    "highest": {
+      "score": "262/2",
+      "opposition": "KKR",
+      "date": "26 Apr 2024"
+    },
+    "lowest": {
+      "score": "73",
+      "opposition": "RPS",
+      "date": "14 May 2017"
+    }
+  },
+  {
+    "team": "DC",
+    "highest": {
+      "score": "257/4",
+      "opposition": "MI",
+      "date": "27 Apr 2024"
+    },
+    "lowest": {
+      "score": "66",
+      "opposition": "MI",
+      "date": "06 May 2017"
+    }
+  },
+  {
+    "team": "CSK",
+    "highest": {
+      "score": "246/5",
+      "opposition": "RR",
+      "date": "03 Apr 2010"
+    },
+    "lowest": {
+      "score": "79",
+      "opposition": "MI",
+      "date": "05 May 2013"
+    }
+  },
+  {
+    "team": "MI",
+    "highest": {
+      "score": "247/9",
+      "opposition": "DC",
+      "date": "27 Apr 2024"
+    },
+    "lowest": {
+      "score": "87",
+      "opposition": "SRH",
+      "date": "24 Apr 2018"
+    }
+  },
+  {
+    "team": "RR",
+    "highest": {
+      "score": "242/6",
+      "opposition": "SRH",
+      "date": "07 May 2023"
+    },
+    "lowest": {
+      "score": "58",
+      "opposition": "RCB",
+      "date": "18 Apr 2009"
+    }
+  },
+  {
+    "team": "GT",
+    "highest": {
+      "score": "233/3",
+      "opposition": "MI",
+      "date": "26 May 2023"
+    },
+    "lowest": {
+      "score": "89",
+      "opposition": "DC",
+      "date": "24 Apr 2024"
+    }
+  },
+  {
+    "team": "LSG",
+    "highest": {
+      "score": "257/5",
+      "opposition": "PBKS",
+      "date": "28 Apr 2023"
+    },
+    "lowest": {
+      "score": "108",
+      "opposition": "RCB",
+      "date": "01 May 2023"
+    }
+  },
+  {
+    "team": "DCH",
+    "highest": {
+      "score": "214/5",
+      "opposition": "RR",
+      "date": "24 Apr 2008"
+    },
+    "lowest": {
+      "score": "82",
+      "opposition": "DD",
+      "date": "22 May 2008"
+    }
+  },
+  {
+    "team": "GL",
+    "highest": {
+      "score": "208/7",
+      "opposition": "DC",
+      "date": "04 May 2017"
+    },
+    "lowest": {
+      "score": "104",
+      "opposition": "SRH",
+      "date": "06 May 2016"
+    }
+  },
+  {
+    "team": "RPS",
+    "highest": {
+      "score": "214/3",
+      "opposition": "MI",
+      "date": "06 Apr 2017"
+    },
+    "lowest": {
+      "score": "76",
+      "opposition": "SRH",
+      "date": "06 May 2017"
+    }
+  },
+  {
+    "team": "PWI",
+    "highest": {
+      "score": "192/3",
+      "opposition": "KXIP",
+      "date": "21 Apr 2013"
+    },
+    "lowest": {
+      "score": "95",
+      "opposition": "CSK",
+      "date": "15 Apr 2013"
+    }
+  },
+  {
+    "team": "KTK",
+    "highest": {
+      "score": "184/4",
+      "opposition": "RR",
+      "date": "15 Apr 2011"
+    },
+    "lowest": {
+      "score": "74",
+      "opposition": "DC",
+      "date": "27 Apr 2011"
+    }
+  }
+]

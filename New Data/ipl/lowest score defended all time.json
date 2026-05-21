@@ -1,0 +1,84 @@
+{
+  "lowest_scores_defended_in_ipl_top_10": [
+    {
+      "rank": 1,
+      "team": "PBKS",
+      "score": "111",
+      "opponent": "KKR",
+      "result": "Won by 16 runs",
+      "year": 2025
+    },
+    {
+      "rank": 2,
+      "team": "CSK",
+      "score": "116/9",
+      "opponent": "KXIP",
+      "result": "Won by 24 runs",
+      "year": 2009
+    },
+    {
+      "rank": 3,
+      "team": "SRH",
+      "score": "118",
+      "opponent": "MI",
+      "result": "Won by 31 runs",
+      "year": 2018
+    },
+    {
+      "rank": 4,
+      "team": "KXIP",
+      "score": "119/8",
+      "opponent": "MI",
+      "result": "Won by 3 runs",
+      "year": 2009
+    },
+    {
+      "rank": 5,
+      "team": "SRH",
+      "score": "119/8",
+      "opponent": "PWI",
+      "result": "Won by 11 runs",
+      "year": 2013
+    },
+    {
+      "rank": 6,
+      "team": "MI",
+      "score": "120/9",
+      "opponent": "PWI",
+      "result": "Won by 1 run",
+      "year": 2012
+    },
+    {
+      "rank": 7,
+      "team": "PBKS",
+      "score": "125/7",
+      "opponent": "SRH",
+      "result": "Won by 5 runs",
+      "year": 2021
+    },
+    {
+      "rank": 8,
+      "team": "RCB",
+      "score": "126/8",
+      "opponent": "CSK",
+      "result": "Won by 14 runs",
+      "year": 2008
+    },
+    {
+      "rank": 9,
+      "team": "SRH",
+      "score": "126/6",
+      "opponent": "PWI",
+      "result": "Won by 22 runs",
+      "year": 2013
+    },
+    {
+      "rank": 10,
+      "team": "KXIP",
+      "score": "126/7",
+      "opponent": "SRH",
+      "result": "Won by 12 runs",
+      "year": 2020
+    }
+  ]
+}

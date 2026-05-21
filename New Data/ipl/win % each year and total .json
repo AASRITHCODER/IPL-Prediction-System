@@ -1,0 +1,278 @@
+[
+  {
+    "team": "Chennai Super Kings (CSK)",
+  "total_wins": 138,
+  "total_matches": 253,
+  "win_percentage": 54.5,
+    "seasons": [
+      {"year": 2008, "position": "2nd (Runner-up)", "wins": 9, "losses": 5},
+      {"year": 2009, "position": "4th (Semi-finalist)", "wins": 8, "losses": 6},
+      {"year": 2010, "position": "1st (Champion)", "wins": 9, "losses": 5},
+      {"year": 2011, "position": "1st (Champion)", "wins": 11, "losses": 5},
+      {"year": 2012, "position": "2nd (Runner-up)", "wins": 8, "losses": 6},
+      {"year": 2013, "position": "2nd (Runner-up)", "wins": 11, "losses": 5},
+      {"year": 2014, "position": "3rd", "wins": 9, "losses": 5},
+      {"year": 2015, "position": "2nd (Runner-up)", "wins": 10, "losses": 4},
+      {"year": 2018, "position": "1st (Champion)", "wins": 9, "losses": 5},
+      {"year": 2019, "position": "2nd (Runner-up)", "wins": 9, "losses": 5},
+      {"year": 2020, "position": "7th", "wins": 6, "losses": 8},
+      {"year": 2021, "position": "1st (Champion)", "wins": 11, "losses": 5},
+      {"year": 2022, "position": "9th", "wins": 4, "losses": 10},
+      {"year": 2023, "position": "1st (Champion)", "wins": 10, "losses": 4},
+      {"year": 2024, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2025, "position": "10th", "wins": 4, "losses": 10}
+    ]
+  },
+  {
+  "team": "Mumbai Indians (MI)",
+  "total_wins": 151,
+  "total_matches": 273,
+  "win_percentage": 55.31,
+    "seasons": [
+      {"year": 2008, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2009, "position": "7th", "wins": 5, "losses": 9},
+      {"year": 2010, "position": "2nd (Runner-up)", "wins": 10, "losses": 4},
+      {"year": 2011, "position": "3rd", "wins": 9, "losses": 5},
+      {"year": 2012, "position": "4th", "wins": 8, "losses": 6},
+      {"year": 2013, "position": "1st (Champion)", "wins": 11, "losses": 5},
+      {"year": 2014, "position": "4th", "wins": 7, "losses": 7},
+      {"year": 2015, "position": "1st (Champion)", "wins": 10, "losses": 4},
+      {"year": 2016, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2017, "position": "1st (Champion)", "wins": 10, "losses": 4},
+      {"year": 2018, "position": "5th", "wins": 6, "losses": 8},
+      {"year": 2019, "position": "1st (Champion)", "wins": 9, "losses": 5},
+      {"year": 2020, "position": "1st (Champion)", "wins": 11, "losses": 5},
+      {"year": 2021, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2022, "position": "10th", "wins": 4, "losses": 10},
+      {"year": 2023, "position": "3rd", "wins": 8, "losses": 6},
+      {"year": 2024, "position": "10th", "wins": 4, "losses": 10},
+      {"year": 2025, "position": "4th", "wins": 8, "losses": 6}
+    ]
+  },
+  {
+    "team": "Kolkata Knight Riders (KKR)",
+    "total_wins": 135,
+    "total_matches": 266,
+    "win_percentage": 50.8,
+    "seasons": [
+      {"year": 2008, "position": "6th", "wins": 6, "losses": 8},
+      {"year": 2009, "position": "8th", "wins": 3, "losses": 10},
+      {"year": 2010, "position": "6th", "wins": 7, "losses": 7},
+      {"year": 2011, "position": "4th", "wins": 8, "losses": 6},
+      {"year": 2012, "position": "1st (Champion)", "wins": 10, "losses": 4},
+      {"year": 2013, "position": "7th", "wins": 6, "losses": 10},
+      {"year": 2014, "position": "1st (Champion)", "wins": 11, "losses": 5},
+      {"year": 2015, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2016, "position": "4th", "wins": 8, "losses": 6},
+      {"year": 2017, "position": "3rd", "wins": 8, "losses": 6},
+      {"year": 2018, "position": "3rd", "wins": 9, "losses": 5},
+      {"year": 2019, "position": "5th", "wins": 6, "losses": 8},
+      {"year": 2020, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2021, "position": "2nd (Runner-up)", "wins": 9, "losses": 5},
+      {"year": 2022, "position": "7th", "wins": 6, "losses": 8},
+      {"year": 2023, "position": "7th", "wins": 6, "losses": 8},
+      {"year": 2024, "position": "1st (Champion)", "wins": 11, "losses": 3},
+      {"year": 2025, "position": "8th", "wins": 5, "losses": 9}
+    ]
+  },
+  {
+    "team": "Royal Challengers Bengaluru (RCB)",
+    "total_wins": 132,
+    "total_matches": 271,
+    "win_percentage": 48.7,
+    "seasons": [
+      {"year": 2008, "position": "7th", "wins": 4, "losses": 10},
+      {"year": 2009, "position": "2nd (Runner-up)", "wins": 9, "losses": 5},
+      {"year": 2010, "position": "3rd", "wins": 8, "losses": 6},
+      {"year": 2011, "position": "2nd (Runner-up)", "wins": 9, "losses": 5},
+      {"year": 2012, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2013, "position": "5th", "wins": 9, "losses": 7},
+      {"year": 2014, "position": "7th", "wins": 5, "losses": 9},
+      {"year": 2015, "position": "3rd", "wins": 8, "losses": 6},
+      {"year": 2016, "position": "2nd (Runner-up)", "wins": 9, "losses": 5},
+      {"year": 2017, "position": "8th", "wins": 3, "losses": 10},
+      {"year": 2018, "position": "6th", "wins": 6, "losses": 8},
+      {"year": 2019, "position": "8th", "wins": 5, "losses": 8},
+      {"year": 2020, "position": "4th", "wins": 7, "losses": 7},
+      {"year": 2021, "position": "3rd", "wins": 9, "losses": 5},
+      {"year": 2022, "position": "3rd", "wins": 8, "losses": 6},
+      {"year": 2023, "position": "6th", "wins": 7, "losses": 7},
+      {"year": 2024, "position": "4th", "wins": 7, "losses": 7},
+      {"year": 2025, "position": "1st (Champion)", "wins": 9, "losses": 5}
+    ]
+  },
+  {
+    "team": "Rajasthan Royals (RR)",
+    "total_wins": 112,
+    "total_matches": 231,
+    "win_percentage": 48.5,
+    "seasons": [
+      {"year": 2008, "position": "1st (Champion)", "wins": 11, "losses": 3},
+      {"year": 2009, "position": "6th", "wins": 6, "losses": 8},
+      {"year": 2010, "position": "7th", "wins": 6, "losses": 8},
+      {"year": 2011, "position": "6th", "wins": 6, "losses": 8},
+      {"year": 2012, "position": "7th", "wins": 7, "losses": 9},
+      {"year": 2013, "position": "3rd", "wins": 10, "losses": 6},
+      {"year": 2014, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2015, "position": "4th", "wins": 7, "losses": 7},
+      {"year": 2018, "position": "4th", "wins": 7, "losses": 7},
+      {"year": 2019, "position": "7th", "wins": 5, "losses": 8},
+      {"year": 2020, "position": "8th", "wins": 6, "losses": 8},
+      {"year": 2021, "position": "7th", "wins": 5, "losses": 9},
+      {"year": 2022, "position": "2nd (Runner-up)", "wins": 9, "losses": 5},
+      {"year": 2023, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2024, "position": "3rd", "wins": 8, "losses": 5},
+      {"year": 2025, "position": "7th", "wins": 6, "losses": 8}
+    ]
+  },
+  {
+    "team": "Delhi Capitals / Daredevils (DC)",
+    "total_wins": 113,
+    "total_matches": 252,
+    "win_percentage": 44.8,
+    "seasons": [
+      {"year": 2008, "position": "4th (Semi-finalist)", "wins": 7, "losses": 6},
+      {"year": 2009, "position": "3rd (Semi-finalist)", "wins": 10, "losses": 5},
+      {"year": 2010, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2011, "position": "10th", "wins": 4, "losses": 10},
+      {"year": 2012, "position": "3rd", "wins": 11, "losses": 5},
+      {"year": 2013, "position": "9th", "wins": 3, "losses": 13},
+      {"year": 2014, "position": "8th", "wins": 2, "losses": 12},
+      {"year": 2015, "position": "7th", "wins": 5, "losses": 9},
+      {"year": 2016, "position": "6th", "wins": 7, "losses": 7},
+      {"year": 2017, "position": "6th", "wins": 6, "losses": 8},
+      {"year": 2018, "position": "8th", "wins": 5, "losses": 9},
+      {"year": 2019, "position": "3rd", "wins": 9, "losses": 5},
+      {"year": 2020, "position": "2nd (Runner-up)", "wins": 8, "losses": 8},
+      {"year": 2021, "position": "3rd", "wins": 10, "losses": 4},
+      {"year": 2022, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2023, "position": "9th", "wins": 5, "losses": 9},
+      {"year": 2024, "position": "6th", "wins": 7, "losses": 7},
+      {"year": 2025, "position": "5th", "wins": 7, "losses": 7}
+    ]
+  },
+  {
+    "team": "Punjab Kings / Kings XI Punjab (PBKS)",
+    "total_wins": 118,
+    "total_matches": 260,
+    "win_percentage": 45.4,
+    "seasons": [
+      {"year": 2008, "position": "3rd (Semi-finalist)", "wins": 10, "losses": 5},
+      {"year": 2009, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2010, "position": "8th", "wins": 4, "losses": 10},
+      {"year": 2011, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2012, "position": "6th", "wins": 8, "losses": 8},
+      {"year": 2013, "position": "6th", "wins": 8, "losses": 8},
+      {"year": 2014, "position": "2nd (Runner-up)", "wins": 11, "losses": 3},
+      {"year": 2015, "position": "8th", "wins": 3, "losses": 11},
+      {"year": 2016, "position": "8th", "wins": 4, "losses": 10},
+      {"year": 2017, "position": "5th", "wins": 7, "losses": 7},
+      {"year": 2018, "position": "7th", "wins": 6, "losses": 8},
+      {"year": 2019, "position": "6th", "wins": 6, "losses": 8},
+      {"year": 2020, "position": "6th", "wins": 6, "losses": 8},
+      {"year": 2021, "position": "6th", "wins": 6, "losses": 8},
+      {"year": 2022, "position": "6th", "wins": 7, "losses": 7},
+      {"year": 2023, "position": "8th", "wins": 6, "losses": 8},
+      {"year": 2024, "position": "9th", "wins": 5, "losses": 9},
+      {"year": 2025, "position": "2nd (Runner-up)", "wins": 9, "losses": 5}
+    ]
+  },
+  {
+    "team": "Sunrisers Hyderabad (SRH)",
+    "total_wins": 87,
+    "total_matches": 182,
+    "win_percentage": 47.8,
+    "seasons": [
+      {"year": 2013, "position": "4th", "wins": 10, "losses": 6},
+      {"year": 2014, "position": "6th", "wins": 6, "losses": 8},
+      {"year": 2015, "position": "6th", "wins": 7, "losses": 7},
+      {"year": 2016, "position": "1st (Champion)", "wins": 11, "losses": 6},
+      {"year": 2017, "position": "4th", "wins": 8, "losses": 6},
+      {"year": 2018, "position": "2nd (Runner-up)", "wins": 10, "losses": 7},
+      {"year": 2019, "position": "4th", "wins": 6, "losses": 9},
+      {"year": 2020, "position": "3rd", "wins": 8, "losses": 8},
+      {"year": 2021, "position": "8th", "wins": 3, "losses": 11},
+      {"year": 2022, "position": "8th", "wins": 6, "losses": 8},
+      {"year": 2023, "position": "10th", "wins": 4, "losses": 10},
+      {"year": 2024, "position": "2nd (Runner-up)", "wins": 9, "losses": 7},
+      {"year": 2025, "position": "6th", "wins": 6, "losses": 7}
+    ]
+  },
+  {
+    "team": "Gujarat Titans (GT)",
+    "total_wins": 37,
+    "total_matches": 61,
+    "win_percentage": 60.7,
+    "seasons": [
+      {"year": 2022, "position": "1st (Champion)", "wins": 12, "losses": 4},
+      {"year": 2023, "position": "2nd (Runner-up)", "wins": 11, "losses": 6},
+      {"year": 2024, "position": "8th", "wins": 5, "losses": 7},
+      {"year": 2025, "position": "3rd", "wins": 9, "losses": 5}
+    ]
+  },
+  {
+    "team": "Lucknow Super Giants (LSG)",
+    "total_wins": 30,
+    "total_matches": 57,
+    "win_percentage": 52.6,
+    "seasons": [
+      {"year": 2022, "position": "3rd", "wins": 9, "losses": 5},
+      {"year": 2023, "position": "3rd", "wins": 8, "losses": 6},
+      {"year": 2024, "position": "7th", "wins": 7, "losses": 7},
+      {"year": 2025, "position": "7th", "wins": 6, "losses": 8}
+    ]
+  },
+  {
+    "team": "Deccan Chargers (DCH)",
+    "total_wins": 29,
+    "total_matches": 75,
+    "win_percentage": 38.7,
+    "seasons": [
+      {"year": 2008, "position": "8th", "wins": 2, "losses": 12},
+      {"year": 2009, "position": "1st (Champion)", "wins": 9, "losses": 6},
+      {"year": 2010, "position": "4th", "wins": 8, "losses": 8},
+      {"year": 2011, "position": "7th", "wins": 6, "losses": 8},
+      {"year": 2012, "position": "8th", "wins": 4, "losses": 11}
+    ]
+  },
+  {
+    "team": "Rising Pune Supergiant (RPS)",
+    "total_wins": 15,
+    "total_matches": 30,
+    "win_percentage": 50.0,
+    "seasons": [
+      {"year": 2016, "position": "7th", "wins": 5, "losses": 9},
+      {"year": 2017, "position": "2nd (Runner-up)", "wins": 10, "losses": 6}
+    ]
+  },
+  {
+    "team": "Gujarat Lions (GL)",
+    "total_wins": 13,
+    "total_matches": 30,
+    "win_percentage": 43.3,
+    "seasons": [
+      {"year": 2016, "position": "3rd", "wins": 9, "losses": 5},
+      {"year": 2017, "position": "7th", "wins": 4, "losses": 10}
+    ]
+  },
+  {
+    "team": "Pune Warriors India (PWI)",
+    "total_wins": 12,
+    "total_matches": 46,
+    "win_percentage": 26.1,
+    "seasons": [
+      {"year": 2011, "position": "9th", "wins": 4, "losses": 9},
+      {"year": 2012, "position": "9th", "wins": 4, "losses": 12},
+      {"year": 2013, "position": "8th", "wins": 4, "losses": 12}
+    ]
+  },
+  {
+    "team": "Kochi Tuskers Kerala (KTK)",
+    "total_wins": 6,
+    "total_matches": 14,
+    "win_percentage": 42.9,
+    "seasons": [
+      {"year": 2011, "position": "8th", "wins": 6, "losses": 8}
+    ]
+  }
+]
