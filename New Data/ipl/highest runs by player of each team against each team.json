@@ -1,0 +1,124 @@
+{
+  "highest_individual_score_by_player_for_each_team_against_each_opponent": {
+    "CSK": {
+      "vs_MI": {"player": "Ruturaj Gaikwad", "score": "88*", "year": "2021"},
+      "vs_RCB": {"player": "Ruturaj Gaikwad", "score": "101*", "year": "2021"},
+      "vs_KKR": {"player": "Shane Watson", "score": "117", "year": "2018"},
+      "vs_DC": {"player": "Murali Vijay", "score": "113", "year": "2012"},
+      "vs_RR": {"player": "Suresh Raina", "score": "98*", "year": "2009"},
+      "vs_PBKS": {"player": "Shane Watson", "score": "117*", "year": "2018"},
+      "vs_SRH": {"player": "Ruturaj Gaikwad", "score": "99", "year": "2022"},
+      "vs_GT": {"player": "Ruturaj Gaikwad", "score": "92", "year": "2023"},
+      "vs_LSG": {"player": "Ruturaj Gaikwad", "score": "108", "year": "2024"}
+    },
+
+    "MI": {
+      "vs_CSK": {"player": "Rohit Sharma", "score": "105*", "year": "2024"},
+      "vs_RCB": {"player": "Ishan Kishan", "score": "99", "year": "2020"},
+      "vs_KKR": {"player": "Rohit Sharma", "score": "109*", "year": "2012"},
+      "vs_DC": {"player": "Lendl Simmons", "score": "100*", "year": "2014"},
+      "vs_RR": {"player": "Corey Anderson", "score": "95*", "year": "2014"},
+      "vs_PBKS": {"player": "Rohit Sharma", "score": "79*", "year": "2013"},
+      "vs_SRH": {"player": "Cameron Green", "score": "100*", "year": "2023"},
+      "vs_GT": {"player": "Suryakumar Yadav", "score": "103*", "year": "2023"},
+      "vs_LSG": {"player": "Rohit Sharma", "score": "68", "year": "2022"}
+    },
+
+    "RCB": {
+      "vs_CSK": {"player": "Virat Kohli", "score": "90*", "year": "2013"},
+      "vs_MI": {"player": "AB de Villiers", "score": "133*", "year": "2015"},
+      "vs_KKR": {"player": "Chris Gayle", "score": "102*", "year": "2011"},
+      "vs_DC": {"player": "Chris Gayle", "score": "128*", "year": "2012"},
+      "vs_RR": {"player": "Virat Kohli", "score": "113", "year": "2024"},
+      "vs_PBKS": {"player": "Chris Gayle", "score": "117", "year": "2015"},
+      "vs_SRH": {"player": "Virat Kohli", "score": "100", "year": "2023"},
+      "vs_GT": {"player": "Virat Kohli", "score": "101*", "year": "2023"},
+      "vs_LSG": {"player": "Faf du Plessis", "score": "96", "year": "2023"},
+      "vs_PWI": {"player": "Chris Gayle", "score": "175*", "year": "2013"}
+    },
+
+    "KKR": {
+      "vs_CSK": {"player": "Andre Russell", "score": "88*", "year": "2018"},
+      "vs_MI": {"player": "Venkatesh Iyer", "score": "104", "year": "2023"},
+      "vs_RCB": {"player": "Brendon McCullum", "score": "158*", "year": "2008"},
+      "vs_DC": {"player": "Sunil Narine", "score": "85", "year": "2024"},
+      "vs_RR": {"player": "Yusuf Pathan", "score": "100", "year": "2010"},
+      "vs_PBKS": {"player": "Andre Russell", "score": "88*", "year": "2018"},
+      "vs_SRH": {"player": "Nitish Rana", "score": "80", "year": "2023"},
+      "vs_GT": {"player": "Venkatesh Iyer", "score": "83", "year": "2023"},
+      "vs_LSG": {"player": "Sunil Narine", "score": "81", "year": "2024"}
+    },
+
+    "DC": {
+      "vs_CSK": {"player": "Rishabh Pant", "score": "79*", "year": "2018"},
+      "vs_MI": {"player": "Rishabh Pant", "score": "78", "year": "2019"},
+      "vs_RCB": {"player": "Rishabh Pant", "score": "85", "year": "2018"},
+      "vs_KKR": {"player": "Rishabh Pant", "score": "128*", "year": "2018"},
+      "vs_RR": {"player": "Rishabh Pant", "score": "78*", "year": "2021"},
+      "vs_PBKS": {"player": "David Warner", "score": "92", "year": "2023"},
+      "vs_SRH": {"player": "Rishabh Pant", "score": "128*", "year": "2018"},
+      "vs_GT": {"player": "Rishabh Pant", "score": "88*", "year": "2024"},
+      "vs_LSG": {"player": "Jake Fraser-McGurk", "score": "55", "year": "2024"}
+    },
+
+    "RR": {
+      "vs_CSK": {"player": "Ajinkya Rahane", "score": "105*", "year": "2012"},
+      "vs_MI": {"player": "Yashasvi Jaiswal", "score": "124", "year": "2023"},
+      "vs_RCB": {"player": "Jos Buttler", "score": "106*", "year": "2022"},
+      "vs_KKR": {"player": "Jos Buttler", "score": "107*", "year": "2024"},
+      "vs_DC": {"player": "Jos Buttler", "score": "116", "year": "2022"},
+      "vs_PBKS": {"player": "Sanju Samson", "score": "119", "year": "2021"},
+      "vs_SRH": {"player": "Jos Buttler", "score": "124", "year": "2021"},
+      "vs_GT": {"player": "Sanju Samson", "score": "68", "year": "2022"},
+      "vs_LSG": {"player": "Yashasvi Jaiswal", "score": "74", "year": "2023"}
+    },
+
+    "PBKS": {
+      "vs_CSK": {"player": "KL Rahul", "score": "98*", "year": "2021"},
+      "vs_MI": {"player": "KL Rahul", "score": "103*", "year": "2019"},
+      "vs_RCB": {"player": "KL Rahul", "score": "132*", "year": "2020"},
+      "vs_KKR": {"player": "Wriddhiman Saha", "score": "115*", "year": "2014"},
+      "vs_DC": {"player": "Mayank Agarwal", "score": "99*", "year": "2020"},
+      "vs_RR": {"player": "KL Rahul", "score": "91*", "year": "2021"},
+      "vs_SRH": {"player": "Chris Gayle", "score": "104*", "year": "2018"},
+      "vs_GT": {"player": "Shikhar Dhawan", "score": "99*", "year": "2023"},
+      "vs_LSG": {"player": "Shikhar Dhawan", "score": "70", "year": "2023"}
+    },
+
+    "SRH": {
+      "vs_CSK": {"player": "David Warner", "score": "90*", "year": "2020"},
+      "vs_MI": {"player": "Abhishek Sharma", "score": "63", "year": "2024"},
+      "vs_RCB": {"player": "Travis Head", "score": "102", "year": "2024"},
+      "vs_KKR": {"player": "David Warner", "score": "91", "year": "2017"},
+      "vs_DC": {"player": "David Warner", "score": "107*", "year": "2019"},
+      "vs_RR": {"player": "Jonny Bairstow", "score": "100*", "year": "2019"},
+      "vs_PBKS": {"player": "Abhishek Sharma", "score": "66", "year": "2025"},
+      "vs_GT": {"player": "Abhishek Sharma", "score": "65", "year": "2024"},
+      "vs_LSG": {"player": "Travis Head", "score": "89", "year": "2024"}
+    },
+
+    "GT": {
+      "vs_CSK": {"player": "Sai Sudharsan", "score": "103", "year": "2024"},
+      "vs_MI": {"player": "Shubman Gill", "score": "129", "year": "2023"},
+      "vs_RCB": {"player": "Shubman Gill", "score": "104*", "year": "2023"},
+      "vs_KKR": {"player": "Shubman Gill", "score": "90", "year": "2023"},
+      "vs_DC": {"player": "Shubman Gill", "score": "89*", "year": "2024"},
+      "vs_RR": {"player": "Shubman Gill", "score": "72", "year": "2022"},
+      "vs_PBKS": {"player": "Shubman Gill", "score": "96", "year": "2023"},
+      "vs_SRH": {"player": "Shubman Gill", "score": "101", "year": "2023"},
+      "vs_LSG": {"player": "Shubman Gill", "score": "94*", "year": "2023"}
+    },
+
+    "LSG": {
+      "vs_CSK": {"player": "KL Rahul", "score": "82", "year": "2023"},
+      "vs_MI": {"player": "Marcus Stoinis", "score": "89*", "year": "2024"},
+      "vs_RCB": {"player": "Quinton de Kock", "score": "81", "year": "2022"},
+      "vs_KKR": {"player": "Quinton de Kock", "score": "140*", "year": "2022"},
+      "vs_DC": {"player": "KL Rahul", "score": "77", "year": "2024"},
+      "vs_RR": {"player": "KL Rahul", "score": "76", "year": "2022"},
+      "vs_PBKS": {"player": "Marcus Stoinis", "score": "72", "year": "2023"},
+      "vs_SRH": {"player": "Nicholas Pooran", "score": "70", "year": "2023"},
+      "vs_GT": {"player": "Marcus Stoinis", "score": "58*", "year": "2024"}
+    }
+  }
+}

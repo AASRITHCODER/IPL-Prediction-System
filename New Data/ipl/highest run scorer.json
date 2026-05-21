@@ -1,0 +1,123 @@
+{
+  "highest_individual_score_by_player_for_each_team": {
+    "CSK": {
+      "player": "Murali Vijay",
+      "score": "127",
+      "balls": "56",
+      "opponent": "RR",
+      "year": "2010"
+    },
+
+    "MI": {
+      "player": "Rohit Sharma",
+      "score": "109*",
+      "balls": "60",
+      "opponent": "KKR",
+      "year": "2012"
+    },
+
+    "RCB": {
+      "player": "Chris Gayle",
+      "score": "175*",
+      "balls": "66",
+      "opponent": "PWI",
+      "year": "2013"
+    },
+
+    "KKR": {
+      "player": "Brendon McCullum",
+      "score": "158*",
+      "balls": "73",
+      "opponent": "RCB",
+      "year": "2008"
+    },
+
+    "DC": {
+      "player": "Rishabh Pant",
+      "score": "128*",
+      "balls": "63",
+      "opponent": "SRH",
+      "year": "2018"
+    },
+
+    "RR": {
+      "player": "Jos Buttler",
+      "score": "124",
+      "balls": "64",
+      "opponent": "SRH",
+      "year": "2021"
+    },
+
+    "PBKS": {
+      "player": "KL Rahul",
+      "score": "132*",
+      "balls": "69",
+      "opponent": "RCB",
+      "year": "2020"
+    },
+
+    "SRH": {
+      "player": "Abhishek Sharma",
+      "score": "141",
+      "balls": "55",
+      "opponent": "PBKS",
+      "year": "2025"
+    },
+
+    "GT": {
+      "player": "Shubman Gill",
+      "score": "129",
+      "balls": "60",
+      "opponent": "MI",
+      "year": "2023"
+    },
+
+    "LSG": {
+      "player": "Quinton de Kock",
+      "score": "140*",
+      "balls": "70",
+      "opponent": "KKR",
+      "year": "2022"
+    },
+
+    "Deccan Chargers (DCg)": {
+      "player": "Andrew Symonds",
+      "score": "117*",
+      "balls": "53",
+      "opponent": "RR",
+      "year": "2008"
+    },
+
+    "Gujarat Lions (GL)": {
+      "player": "Suresh Raina",
+      "score": "100*",
+      "balls": "46",
+      "opponent": "SRH",
+      "year": "2016"
+    },
+
+    "Rising Pune Supergiant (RPS)": {
+      "player": "Ajinkya Rahane",
+      "score": "103*",
+      "balls": "60",
+      "opponent": "DC",
+      "year": "2017"
+    },
+
+    "Kochi Tuskers Kerala (KTK)": {
+      "player": "Brendon McCullum",
+      "score": "81",
+      "balls": "51",
+      "opponent": "MI",
+      "year": "2011"
+    },
+
+    "Pune Warriors India (PWI)": {
+      "player": "Yuvraj Singh",
+      "score": "83",
+      "balls": "38",
+      "opponent": "RR",
+      "year": "2010"
+    }
+  }
+}
