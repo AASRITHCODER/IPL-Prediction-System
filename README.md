@@ -10,7 +10,7 @@ pre-commit run --all-files
 
 mlflow ui --backend-store-uri sqlite:///experiments/mlruns.db --port 5000
 
-“I built a versioned ML artifact system with controlled promotion to production”
+“We built a versioned ML artifact system with controlled promotion to production”
 
 # IPL Prediction System using LSTM
 
@@ -55,6 +55,7 @@ In another ternimal run
 - [@Krishna Chaitanya](https://github.com/Krishna752006)
 - [@Guru Charan](https://github.com/gcrn2318)
 - [@Lokesh](https://github.com/LokeshVasireddy)
+- [@Gnana Aasrith](https://github.com/AASRITHCODER)
 
 ### 3.5 Known Observations & Potential Improvements
 
@@ -63,4 +64,4 @@ In another ternimal run
 - **No early stopping** — fixed epoch count only; no `EarlyStopping` or learning rate scheduling.
 - **Hardcoded validation thresholds** — `MAE < 0.35` and `R2 > 0.70` are inline constants; externalising them would help CI/CD pipelines.
 - **Silent exception handling** — the entire training block is wrapped in a broad `try/except` that only prints the error. Failed MLflow runs are not explicitly marked as `FAILED`.
-- **mlruns cleanup workaround** — the stray folder merge is a symptom of an MLflow tracking URI config issue; worth fixing at the source.ramam
+- **mlruns cleanup workaround** — the stray folder merge is a symptom of an MLflow tracking URI config issue; worth fixing at the source.
